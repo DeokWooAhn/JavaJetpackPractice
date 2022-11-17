@@ -6,29 +6,30 @@ import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitInstanse {
-    public static HouseService houseService;
+    public static Retrofit retrofit;
 
     public static OkHttpClient okHttpClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor()
                 .setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(httpLoggingInterceptor)
-//                .build();
-//
-//        return null;
 
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
     }
 
-    public static void retrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
-                .client(okHttpClient())
-                .baseUrl("https://run.mocky.io")
-                .build();
-        houseService = retrofit.create(HouseService.class);
+    public static Retrofit getInstance() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .client(okHttpClient())
+                    .baseUrl("https://run.mocky.io")
+                    .build();
+        }
+        return retrofit;
 
+    }
+
+    public static HouseService getHouseService() {
+        return retrofit.create(HouseService.class);
     }
 }
