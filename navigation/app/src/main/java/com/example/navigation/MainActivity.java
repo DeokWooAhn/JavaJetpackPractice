@@ -30,15 +30,22 @@ public class MainActivity extends AppCompatActivity {
         navController = host.getNavController();
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.search, R.id.like).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        appBarConfiguration = new AppBarConfiguration
+                .Builder(R.id.home, R.id.search, R.id.like, R.id.user).build();
+
+//        appBarConfiguration =
+//                new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+        navController.addOnDestinationChangedListener();
 
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        return NavigationUI.navigateUp(navController, appBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
 
 }
